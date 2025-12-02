@@ -65,7 +65,34 @@
                     <a href="#" class="hidden md:inline text-gray-700 hover:text-purple-700 font-medium">Галерея</a>
                     <a href="#" class="hidden md:inline text-gray-700 hover:text-purple-700 font-medium">Сообщество</a>
                     <a href="#" class="hidden md:inline text-gray-700 hover:text-purple-700 font-medium">Заказы</a>
-                    <button class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2 rounded-full transition duration-200">Войти</button>
+                    <div class="relative group">
+    <button id="loginButton" class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2 rounded-full transition duration-200 flex items-center space-x-2">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Войти</span>
+    </button>
+    
+    <!-- Dropdown меню если пользователь авторизован -->
+    <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden group-hover:block z-50">
+        <div id="userInfo" class="px-4 py-2 border-b hidden">
+            <p class="font-medium text-gray-800 truncate" id="userName"></p>
+            <p class="text-sm text-gray-600 truncate" id="userEmail"></p>
+        </div>
+        <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-sign-in-alt mr-2"></i>Войти
+        </a>
+        <a href="signup.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+            <i class="fas fa-user-plus mr-2"></i>Регистрация
+        </a>
+        <div id="logoutSection" class="hidden">
+            <a href="myaccount.html" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-user-circle mr-2"></i>Мой аккаунт
+            </a>
+            <button id="logoutButton" class="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">
+                <i class="fas fa-sign-out-alt mr-2"></i>Выйти
+            </button>
+        </div>
+    </div>
+</div>
                     <button class="md:hidden text-gray-700">
                         <i class="fas fa-bars text-xl"></i>
                     </button>

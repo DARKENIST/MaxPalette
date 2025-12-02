@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - MaxPalette</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .custom-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    
+    <!-- Навигация -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center">
+                        <i class="fas fa-palette text-white text-xl"></i>
+                    </div>
+                    <span class="custom-font text-xl font-bold text-purple-800">MaxPalette</span>
+                </a>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="gallery.html" class="text-gray-700 hover:text-purple-700">Галерея</a>
+                    <a href="myaccount.html" class="text-purple-700 font-medium">Личный кабинет</a>
+                    <button id="logoutBtn" class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Выйти
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Контент -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Заголовок -->
+            <div class="mb-8">
+                <h1 class="custom-font text-3xl font-bold text-gray-800">Личный кабинет</h1>
+                <p class="text-gray-600 mt-2">Управляйте своим профилем и работами</p>
+            </div>
+
+            <!-- Информация о пользователе -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <div class="flex items-center space-x-4 mb-6">
+                    <img id="userAvatar" src="./images/avatar.png" alt="Аватар" class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg">
+                    <div>
+                        <h2 id="userName" class="text-xl font-bold text-gray-800"></h2>
+                        <p id="userEmail" class="text-gray-600"></p>
+                        <p class="text-sm text-gray-500 mt-1">Дата регистрации: <span id="userJoinDate"></span></p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <div class="text-purple-600 text-lg font-bold" id="artworksCount">0</div>
+                        <div class="text-gray-700">Работ</div>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-blue-600 text-lg font-bold" id="followersCount">0</div>
+                        <div class="text-gray-700">Фолловеров</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-green-600 text-lg font-bold" id="likesCount">0</div>
+                        <div class="text-gray-700">Лайков</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Мои работы -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Мои работы</h3>
+                <div id="userArtworks" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Работы будут загружены через JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="js/auth.js"></script>
+    <script>
+        // Проверка авторизации
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('artspace_user'));
+            
+            if (!user || !user.isLoggedIn) {
+                // Перенаправить на страницу входа
+                window.location.href = 'login.html?redirect=myaccount';
+                return;
+            }
+            
+            // Заполнить данные пользователя
+            document.getElementById('userAvatar').src = './images/avatar.png';
+            document.getElementById('userName').textContent = user.name || 'Пользователь';
+            document.getElementById('userEmail').textContent = user.email || '';
+            document.getElementById('userJoinDate').textContent = user.joinDate || '2025-12-02';
+            
+            // Установить счетчики
+            document.getElementById('artworksCount').textContent = Math.floor(Math.random() * 20) + 5;
+            document.getElementById('followersCount').textContent = Math.floor(Math.random() * 500) + 50;
+            document.getElementById('likesCount').textContent = Math.floor(Math.random() * 2000) + 100;
+            
+            // Загрузить примеры работ
+            loadUserArtworks();
+            
+            // Обработчик кнопки выхода
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('artspace_user');
+                localStorage.removeItem('artspace_remember');
+                window.location.href = 'index.html';
+            });
+        });
+        
+        function loadUserArtworks() {
+            const artworks = [
+                {
+                    title: "Грандиозный финал",
+                    category: "Цифровая живопись",
+                    image: "./images/finale.png",
+                    likes: 245
+                },
+                {
+                    title: "Что-то знакомое",
+                    category: "Цифровая живопись",
+                    image: "./images/manga.png",
+                    likes: 189
+                },
+                {
+                    title: "Песикот",
+                    category: "Традиционное искусство",
+                    image: "./images/pesikot.png",
+                    likes: 312
+                }
+            ];
+            
+            const container = document.getElementById('userArtworks');
+            artworks.forEach(artwork => {
+                const artworkElement = document.createElement('div');
+                artworkElement.className = 'bg-gray-50 rounded-lg overflow-hidden';
+                artworkElement.innerHTML = `
+                    <img src="${artwork.image}" alt="${artwork.title}" class="w-full h-48 object-cover">
+                    <div class="p-3">
+                        <h4 class="font-bold text-gray-800">${artwork.title}</h4>
+                        <p class="text-sm text-gray-600">${artwork.category}</p>
+                        <div class="flex items-center mt-2 text-gray-500">
+                            <i class="fas fa-heart mr-1"></i>
+                            <span class="text-sm">${artwork.likes}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(artworkElement);
+            });
+        }
+    </script>
+</body>
+</html>
