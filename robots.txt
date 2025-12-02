@@ -1,0 +1,98 @@
+# Файл robots.txt для MaxPalette
+User-agent: *
+Allow: /
+
+Sitemap: https://ваш-сайт.com/sitemap.xml
+
+# Запрещаем сканирование админ-панелей и системных файлов
+Disallow: /admin/
+Disallow: /administrator/
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+Disallow: /dashboard/
+Disallow: /control-panel/
+Disallow: /private/
+Disallow: /config/
+
+# Запрещаем сканирование поиска и фильтров (чтобы избежать дублей)
+Disallow: /search/
+Disallow: /?search=
+Disallow: /?filter=
+Disallow: /?sort=
+Disallow: /?page=
+
+# Запрещаем сканирование личных кабинетов пользователей
+Disallow: /user/
+Disallow: /profile/
+Disallow: /account/
+Disallow: /settings/
+Disallow: /messages/
+Disallow: /notifications/
+
+# Запрещаем сканирование API и служебных эндпоинтов
+Disallow: /api/
+Disallow: /ajax/
+Disallow: /graphql/
+Disallow: /websocket/
+Disallow: /backend/
+Disallow: /cgi-bin/
+Disallow: /includes/
+
+# Разрешаем сканирование основных разделов сайта
+Allow: /gallery/
+Allow: /artworks/
+Allow: /artists/
+Allow: /categories/
+Allow: /blog/
+Allow: /contests/
+Allow: /help/
+
+# Карта сайта
+Sitemap: https://artspace.example.com/sitemap.xml
+Sitemap: https://artspace.example.com/sitemap-images.xml
+
+# Указываем задержку между запросами для поисковых роботов (в секундах)
+Crawl-delay: 1
+
+# Настройки для отдельных поисковых систем
+
+# Для Google
+User-agent: Googlebot
+Allow: /
+Disallow: /private/
+Disallow: /temp/
+Crawl-delay: 0.5
+
+# Для Google Images
+User-agent: Googlebot-Image
+Allow: /artworks/
+Allow: /gallery/
+Allow: /uploads/images/
+Disallow: /avatars/
+Disallow: /temp-images/
+
+# Для Яндекса
+User-agent: Yandex
+Allow: /
+Disallow: /private/
+Disallow: /temp/
+Crawl-delay: 1
+Clean-param: ref /artworks/
+Clean-param: utm_source /artworks/
+Clean-param: utm_medium /artworks/
+Clean-param: utm_campaign /artworks/
+
+# Блокируем сканирование тестовых и разработческих поддоменов
+User-agent: *
+Disallow: /dev/
+Disallow: /staging/
+Disallow: /test/
+Disallow: /beta/
+
+# Разрешаем сканирование статических ресурсов
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /fonts/
+Allow: /uploads/artworks/
+Allow: /uploads/thumbnails/
